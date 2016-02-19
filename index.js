@@ -176,13 +176,6 @@ window.onload=function(){
 
 
     //canvasLuoqi=clearRect(0,0,600,600)
-
-       
-
-
-
-
-
     //如果本地存储中有棋盘数据，读取这些数据并绘制到棋盘中
         if(localStorage.data){
         	qizi=JSON.parse(localStorage.data);
