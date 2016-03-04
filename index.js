@@ -1,10 +1,237 @@
 window.onload=function(){
+
+  var windowc=function(){
+  var d=new Date();
+var sec=d.getSeconds();
+var min=d.getMinutes();
+var hou=d.getHours();
+var span=document.querySelectorAll('span');
+span[0].innerHTML=hou;
+span[2].innerHTML=min;
+span[4].innerHTML=(sec+1)-1;
+}
+
+setInterval(windowc,1000)
+
+    var canvasclock=document.querySelector("#canvas-clock");
+    ctxclock=canvasclock.getContext("2d");
+    ctxclock.save();
+
+   
+   
+    ctxclock.fillStyle="rgb(255,0,0)"
+ctxclock.fillRect(100,100,200,200);
+
+ctxclock.fillStyle="rgba(0,255,0,0.4)"
+ctxclock.fillRect(150,150,250,250);
+
+ctxclock.strokeStyle="rgb(0,0,255)"
+ctxclock.strokeRect(10.5,10.5,100,300);
+ctxclock.clearRect(150,150,200,200);
+
+
+ctxclock.clearRect(0,0,600,600);
+ctxclock.beginPath();
+ctxclock.moveTo(300,300);
+ctxclock.lineTo(600,0);
+ctxclock.stroke();
+
+ctxclock.moveTo(300,300);
+ctxclock.lineTo(600,300);
+ctxclock.lineTo(500,600);
+ctxclock.fill();
+
+
+ctxclock.clearRect(0,0,600,600);
+//圆
+ctxclock.beginPath();
+ctxclock.arc(300,300,200,0,Math.PI*2);
+//ctxclock.fill();
+ctxclock.moveTo(200,250);
+ctxclock.arc(100,250,50,0,Math.PI*2);
+ctxclock.moveTo(480,220);
+ctxclock.arc(250,250,50,0,Math.PI*2);
+ctxclock.moveTo(130,350);
+ctxclock.arc(250,350,120,0,Math.PI);
+ctxclock.moveTo(50,250);
+ctxclock.lineTo(110,235);
+ctxclock.stroke();
+
+
+ctxclock.clearRect(0,0,600,600);
+
+ctxclock.beginPath();
+ctxclock.moveTo(300,200);
+ctxclock.bezierCurveTo(36,98,123,373,299,453);
+ctxclock.stroke();
+
+
+
+ctxclock.clearRect(0,0,600,600);
+
+//程序与画布的组合
+ctxclock.shadowOffsetX=2;
+ctxclock.shadowOffsetY=2;
+ctxclock.shadowBlur=100;
+ctxclock.shadowColor="rgba(255,0,0,0.5)";
+for(var i=0;i<100;i++){
+  ctxclock.beginPath();
+  var xinx=Math.floor(Math.random()*600);
+  var xiny=Math.floor(Math.random()*600);
+  var r=Math.floor(Math.random()*30+10);
+  ctxclock.arc(xinx,xiny,r,0,Math.PI*2);
+  ctxclock.fillStyle="rgba("+Math.floor(Math.random()*255)+","+Math.floor(Math.random()*255)+","+Math.floor(Math.random()*255)+","+Math.random()+")";
+  ctxclock.fill();
+    
+}
+ctxclock.clearRect(0,0,600,600);
+
+var lingrad=ctxclock.createLinearGradient(200,400,580,300);//值可以改变，但是颜色会依旧全部填满。颜色为一片区域
+lingrad.addColorStop(0,'red');
+lingrad.addColorStop(0.2,'orange');
+lingrad.addColorStop(0.4,'yellow');
+lingrad.addColorStop(0.6,'green');
+lingrad.addColorStop(0.8,'blue');
+lingrad.addColorStop(1,'pink');
+
+
+ctxclock.lineWidth=6;
+ctxclock.lineCap='round';
+ctxclock.strokeStyle=lingrad;
+ctxclock.beginPath();
+ctxclock.moveTo(20,300);
+ctxclock.lineTo(580,300);
+ctxclock.stroke();
+  
+ctxclock.clearRect(0,0,600,600);
+
+ctxclock.restore();
+
+
+
+var drawColok=function(){
+var d=new Date();
+
+var sec=d.getSeconds();
+var min=d.getMinutes();
+var hou=d.getHours();
+ 
+
+//清除画布
+ctxclock.clearRect(0,0,600,600)
+//画表盘
+ctxclock.save();
+ctxclock.strokeStyle="white";
+ctxclock.lineWidth=16;
+ctxclock.translate(300,300);
+
+ctxclock.beginPath();
+ctxclock.arc(0,0,200,0,Math.PI*2);
+ctxclock.stroke();
+
+ctxclock.strokeStyle="white";
+ctxclock.beginPath();
+ctxclock.lineCap='round';
+
+for(var i=1;i<62;i++){
+    ctxclock.rotate(Math.PI/30);
+    if(i%5){
+      ctxclock.lineWidth=2;
+      ctxclock.moveTo(179,0);
+    }else{
+      ctxclock.lineWidth=1;
+      ctxclock.moveTo(160,0);
+     }
+      ctxclock.lineTo(180,0);
+      ctxclock.stroke();
+}
+
+//画中心原点
+ctxclock.beginPath();
+ctxclock.arc(0,0,8,0,Math.PI*2);
+ctxclock.fillStyle="white";
+ctxclock.fill();
+ctxclock.restore();
+
+//画时针
+ctxclock.save();
+ctxclock.translate(300,300);
+ctxclock.rotate(Math.PI/6*hou+Math.PI/30*(min/12));
+ctxclock.strokeStyle="white";
+ctxclock.beginPath();
+ctxclock.moveTo(0,0);
+ctxclock.lineWidth=10;
+ctxclock.lineCap='round';
+ctxclock.lineTo(0,-90);
+ctxclock.stroke();
+ctxclock.restore();
+
+//画分针
+ctxclock.save();
+ctxclock.translate(300,300);
+ctxclock.rotate(Math.PI/30*min+Math.PI/30*(sec/60));
+ctxclock.beginPath();
+ctxclock.moveTo(0,0);
+ctxclock.lineWidth=5;
+ctxclock.lineCap='round';
+ctxclock.lineTo(0,-110);
+ctxclock.strokeStyle="white";
+ctxclock.stroke();
+ctxclock.restore();
+
+//画秒针
+ctxclock.save();
+ctxclock.translate(300,300);
+//ctxclock.rotate(s);
+ctxclock.lineWidth=6;
+ctxclock.rotate(Math.PI/30*sec);
+ctxclock.beginPath();
+ctxclock.strokeStyle="white";
+ctxclock.beginPath();
+ctxclock.moveTo(0,10);
+ctxclock.lineTo(0,-130);
+ctxclock.moveTo(5,-135);
+ctxclock.arc(0,-135,5,0,Math.PI*2);
+ctxclock.stroke();
+ctxclock.restore();
+
+//console.log(1)
+requestAnimationFrame(drawColok);
+}
+
+
+
+
+requestAnimationFrame(drawColok);
+
+/*document.ondblclick=function(){
+  location.href=(canvas.toDataURL().replace("data:image/png","data:stream/octet"));
+}
+
+var link=document.createElement('a');
+link.innerHTML='download image';
+
+link.addEventListener('click',function(ev){
+  link.href=canvas.toDataURL();
+  link.download="mypainting.png";
+},false)
+
+
+document.body.appendChild(link);
+*/
+
+//画五子棋盘
 	  var canvas=document.querySelector("#canvas");
     ctx=canvas.getContext("2d");
     var canvasLuoqi=document.querySelector("#canvas-luoqi");
     ctxLuoqi=canvasLuoqi.getContext("2d");
     var ROW=15;
 
+    /* var img=new Image();
+     img.src='images/beijing.jpg';
+      img.onload=function(){
+          ctx.drawImage(img,0,0);
+         }*/
     for(var i=0;i<ROW;i++){
 
     	var li1=ctx.createLinearGradient(0,0,600,600);
@@ -196,5 +423,5 @@ window.onload=function(){
  }//组织时间流
 
 
-
+ctxclock.scale(0.5,0.5)
 }
